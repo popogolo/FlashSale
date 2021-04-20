@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.flashsale.DAO.SequenceDOMapper">
+  <resultMap id="BaseResultMap" type="com.flashsale.DataObject.SequenceDO">
+    <id column="name" jdbcType="VARCHAR" property="name" />
+    <result column="currenetvalue" jdbcType="INTEGER" property="currenetvalue" />
+    <result column="step" jdbcType="INTEGER" property="step" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    name, currenetvalue, step
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from sequence_info
+    where name = #{name,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from sequence_info
+    where name = #{name,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.flashsale.DataObject.SequenceDO">
+    insert into sequence_info (name, currenetvalue, step
+      )
+    values (#{name,jdbcType=VARCHAR}, #{currenetvalue,jdbcType=INTEGER}, #{step,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.flashsale.DataObject.SequenceDO">
+    insert into sequence_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        name,
+      </if>
+      <if test="currenetvalue != null">
+        currenetvalue,
+      </if>
+      <if test="step != null">
+        step,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="currenetvalue != null">
+        #{currenetvalue,jdbcType=INTEGER},
+      </if>
+      <if test="step != null">
+        #{step,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.flashsale.DataObject.SequenceDO">
+    update sequence_info
+    <set>
+      <if test="currenetvalue != null">
+        currenetvalue = #{currenetvalue,jdbcType=INTEGER},
+      </if>
+      <if test="step != null">
+        step = #{step,jdbcType=INTEGER},
+      </if>
+    </set>
+    where name = #{name,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.flashsale.DataObject.SequenceDO">
+    update sequence_info
+    set currenetvalue = #{currenetvalue,jdbcType=INTEGER},
+      step = #{step,jdbcType=INTEGER}
+    where name = #{name,jdbcType=VARCHAR}
+  </update>
+</mapper>

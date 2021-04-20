@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.flashsale.DAO.PromoDOMapper">
+  <resultMap id="BaseResultMap" type="com.flashsale.DataObject.PromoDO">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="promoName" jdbcType="VARCHAR" property="promoname" />
+    <result column="startDate" jdbcType="TIMESTAMP" property="startdate" />
+    <result column="endDate" jdbcType="TIMESTAMP" property="enddate" />
+    <result column="itemId" jdbcType="INTEGER" property="itemid" />
+    <result column="promoItemPrice" jdbcType="DECIMAL" property="promoitemprice" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, promoName, startDate,endDate , itemId, promoItemPrice
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from promo
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="getPromoByItemID" resultMap="BaseResultMap">
+    select 'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from promo
+    where itemId = #{itemid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from promo
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.flashsale.DataObject.PromoDO">
+    insert into promo (id, promoName, startDate, 
+      itemId, promoItemPrice,endDate)
+    values (#{id,jdbcType=INTEGER}, #{promoname,jdbcType=VARCHAR}, #{startdate,jdbcType=TIMESTAMP}, 
+      #{itemid,jdbcType=INTEGER}, #{promoitemprice,jdbcType=DECIMAL},#{enddate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.flashsale.DataObject.PromoDO">
+    insert into promo
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="promoname != null">
+        promoName,
+      </if>
+      <if test="startdate != null">
+        startDate,
+      </if>
+      <if test="itemid != null">
+        itemId,
+      </if>
+      <if test="promoitemprice != null">
+        promoItemPrice,
+      </if>
+      <if test="enddate != null">
+        endDate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="promoname != null">
+        #{promoname,jdbcType=VARCHAR},
+      </if>
+      <if test="startdate != null">
+        #{startdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="itemid != null">
+        #{itemid,jdbcType=INTEGER},
+      </if>
+      <if test="promoitemprice != null">
+        #{promoitemprice,jdbcType=DECIMAL},
+      </if>
+      <if test="enddate != null">
+        endDate,
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.flashsale.DataObject.PromoDO">
+    update promo
+    <set>
+      <if test="promoname != null">
+        promoName = #{promoname,jdbcType=VARCHAR},
+      </if>
+      <if test="startdate != null">
+        startDate = #{startdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="itemid != null">
+        itemId = #{itemid,jdbcType=INTEGER},
+      </if>
+      <if test="promoitemprice != null">
+        promoItemPrice = #{promoitemprice,jdbcType=DECIMAL},
+      </if>
+      <if test="enddate != null">
+        endDate,
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.flashsale.DataObject.PromoDO">
+    update promo
+    set promoName = #{promoname,jdbcType=VARCHAR},
+      startDate = #{startdate,jdbcType=TIMESTAMP},
+      endDate = #{enddate,jdbcType=TIMESTAMP},
+      itemId = #{itemid,jdbcType=INTEGER},
+      promoItemPrice = #{promoitemprice,jdbcType=DECIMAL}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.flashsale.DAO.OrderDOMapper">
+  <resultMap id="BaseResultMap" type="com.flashsale.DataObject.OrderDO">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="userid" jdbcType="INTEGER" property="userid" />
+    <result column="itemid" jdbcType="INTEGER" property="itemid" />
+    <result column="itemprice" jdbcType="DECIMAL" property="itemprice" />
+    <result column="amount" jdbcType="INTEGER" property="amount" />
+    <result column="OrderPrice" jdbcType="DECIMAL" property="orderprice" />
+    <result column="promoid" jdbcType="INTEGER" property="promoId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, userid, itemid, itemprice, amount, OrderPrice,promoid
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from myorder
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from myorder
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.flashsale.DataObject.OrderDO">
+    insert into order (id, userid, itemid, 
+      itemprice, amount, OrderPrice,promoid
+      )
+    values (#{id,jdbcType=VARCHAR}, #{userid,jdbcType=INTEGER}, #{itemid,jdbcType=INTEGER}, 
+      #{itemprice,jdbcType=DECIMAL}, #{amount,jdbcType=INTEGER}, #{orderprice,jdbcType=DECIMAL},#{promoId,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.flashsale.DataObject.OrderDO">
+    insert into myorder
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="userid != null">
+        userid,
+      </if>
+      <if test="itemid != null">
+        itemid,
+      </if>
+      <if test="itemprice != null">
+        itemprice,
+      </if>
+      <if test="amount != null">
+        amount,
+      </if>
+      <if test="orderprice != null">
+        OrderPrice,
+      </if>
+      <if test="promoId != null">
+        promoid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="itemid != null">
+        #{itemid,jdbcType=INTEGER},
+      </if>
+      <if test="itemprice != null">
+        #{itemprice,jdbcType=DECIMAL},
+      </if>
+      <if test="amount != null">
+        #{amount,jdbcType=INTEGER},
+      </if>
+      <if test="orderprice != null">
+        #{orderprice,jdbcType=DECIMAL},
+      </if>
+      <if test="promoId != null">
+        promoid,
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.flashsale.DataObject.OrderDO">
+    update myorder
+    <set>
+      <if test="userid != null">
+        userid = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="itemid != null">
+        itemid = #{itemid,jdbcType=INTEGER},
+      </if>
+      <if test="itemprice != null">
+        itemprice = #{itemprice,jdbcType=DECIMAL},
+      </if>
+      <if test="amount != null">
+        amount = #{amount,jdbcType=INTEGER},
+      </if>
+      <if test="orderprice != null">
+        OrderPrice = #{orderprice,jdbcType=DECIMAL},
+      </if>
+      <if test="promoId != null">
+        promoid,
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.flashsale.DataObject.OrderDO">
+    update myorder
+    set userid = #{userid,jdbcType=INTEGER},
+      itemid = #{itemid,jdbcType=INTEGER},
+      itemprice = #{itemprice,jdbcType=DECIMAL},
+      amount = #{amount,jdbcType=INTEGER},
+      OrderPrice = #{orderprice,jdbcType=DECIMAL},
+      promoid=#{promoId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>
